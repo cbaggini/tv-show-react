@@ -1,38 +1,260 @@
-.App {
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+#root,
+.series {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#searchBar,
+#seriesSearchBar {
+  padding: 1rem 2.5rem;
+  display: flex;
+  background-color: rgb(138, 76, 76);
+}
+
+.seriesTitle {
+  padding-top: 0.1rem;
+}
+
+#selected {
+  margin-left: 2rem;
+  color: rgb(41, 97, 116);
+}
+
+h1 {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+input {
+  padding: 5px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#seriesSearchInput,
+#selectedSeries,
+#searchInput,
+#episodeFilter,
+#seriesFilter {
+  margin-left: 2rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#alphabetic,
+#rating {
+  margin-left: 2rem;
+  margin-right: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+label {
+  margin: auto 1rem;
+  white-space: nowrap;
+}
+
+.episodes {
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  padding: 0;
+}
+
+.episodes > h1 {
+  width: 100%;
+  margin: 2rem;
+}
+
+.cast {
+  width: 100%;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+.cast > h2 {
+  text-align: center;
+}
+
+.cast > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.actors {
+  width: 33%;
+  text-align: center;
+}
+
+.actors > a {
+  text-decoration: underline;
+}
+
+.actors > a:hover {
+  color: darkgrey;
+  cursor: pointer;
+}
+
+#credits > h1 {
+  border: 2px solid black;
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.paginate {
+  width: 100%;
+}
+
+.paginationBtn {
+  margin-left: 2rem;
+  padding: 0.5rem;
+}
+
+.episodeSection {
+  width: 250px;
+  padding: 0.5rem;
+  margin: 2rem;
+  border-radius: 5px;
+}
+
+.episodeArticle,
+.newComment {
+  padding: 0.5rem;
+}
+
+.episodeComment {
+  padding: 0;
+  margin: 0.5rem;
+}
+
+.commentEpisode,
+.sendComment {
+  display: block;
+  width: 50%;
+  text-align: center;
+  margin: 0.3rem auto;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+textarea {
+  resize: none;
+}
+
+.episodeImage {
+  margin-bottom: 0;
+}
+
+.read {
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.fa-heart-o,
+.fa-heart {
+  color: red;
+}
+
+.newComment {
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.seriesClass,
+.creditsClass {
   display: flex;
   flex-direction: column;
+  box-shadow: 5px 10px lightgray;
+  border-radius: 25px;
+  margin: 2rem;
+}
+
+.seriesDescription {
+  display: flex;
+  margin-right: 2rem;
+  padding: 0.5rem 2rem;
+}
+
+.seriesDescription > img {
+  height: 250px;
+}
+
+.seriesArticle {
+  padding: 2rem;
+  width: 50%;
+}
+
+.title {
+  display: flex;
+  min-height: 60px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  background-color: white;
+}
+
+h4 {
+  margin: 0.2rem;
+}
+
+footer {
+  display: flex;
+  background-color: lightblue;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 0;
+  padding: 2rem;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 700px) {
+  .seriesDescription {
+    flex-direction: column;
+    align-items: center;
   }
-  to {
-    transform: rotate(360deg);
+  .seriesImage {
+    width: 210px;
+  }
+}
+
+@media (max-width: 1070px) {
+  #searchBar,
+  #seriesSearchBar {
+    flex-direction: column;
+  }
+  #backBtn,
+  #episodeFilter,
+  #searchInput,
+  #selected {
+    margin: 1rem;
+  }
+  #backBtn {
+    max-width: 150px;
+    align-self: center;
+  }
+  #seriesSearchInput,
+  #selectedSeries,
+  #searchInput,
+  #episodeFilter,
+  #seriesFilter {
+    margin-left: 0;
+  }
+  #seriesFilter {
+    margin-bottom: 0.8rem;
   }
 }
