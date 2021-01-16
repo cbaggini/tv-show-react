@@ -1,19 +1,33 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 
-const toggleLike = (e) => {
-	e.preventDefault();
-	if (e.target.className === "fa fa-heart-o") {
-		e.target.className = "fa fa-heart";
-	} else {
-		e.target.className = "fa fa-heart-o";
-	}
-}
+
 
 const ShowItem = ({id, name, image, summary, rating, genres, status, runtime}) => {
+
+	const [color, setColor] = useState('');
+
+	const toggleLike = (e) => {
+		e.preventDefault();
+		if (e.target.className === "fa fa-heart-o") {
+			e.target.className = "fa fa-heart";
+		} else {
+			e.target.className = "fa fa-heart-o";
+		}
+	}
+
+	useEffect(() => {
+		const getColor = () => { 
+		return "hsl(" + 360 * Math.random() + ',' +
+					(25 + 70 * Math.random()) + '%,' + 
+					(85 + 10 * Math.random()) + '%)'
+		}
+		setColor(getColor());
+	}, [])
+
 	return (
 		<Link to={`/${id}/episodes`}>
-		<section className="seriesClass">
+		<section className="seriesClass" style={{backgroundColor: `${color}`}}>
 			<div className="seriesTitle"><h1>{name}</h1></div>
 			<div className="seriesDescription">
 				<img className="seriesImage" alt={name} src={image ? image.medium.replace('http','https') : "http://via.placeholder.com/210x295/0000FF/808080/"} ></img>

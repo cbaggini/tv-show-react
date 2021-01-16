@@ -17,8 +17,8 @@ a:hover {
   justify-content: center;
 }
 
-#searchBar,
-#seriesSearchBar {
+.searchBar,
+.seriesSearchBar {
   padding: 1rem 2.5rem;
   display: flex;
   background-color: rgb(138, 76, 76);
@@ -28,9 +28,8 @@ a:hover {
   padding-top: 0.1rem;
 }
 
-#selected {
+.selected {
   margin-left: 2rem;
-  color: rgb(41, 97, 116);
 }
 
 h1 {
@@ -44,16 +43,16 @@ input {
   box-sizing: border-box; /* Opera/IE 8+ */
 }
 
-#seriesSearchInput,
-#selectedSeries,
-#searchInput,
-#episodeFilter,
-#seriesFilter {
+.seriesSearchInput,
+.selectedSeries,
+.searchInput,
+.episodeFilter,
+.seriesFilter {
   margin-left: 2rem;
 }
 
-#alphabetic,
-#rating {
+.alphabetic,
+.rating {
   margin-left: 2rem;
   margin-right: 0;
   margin-top: auto;
@@ -105,7 +104,7 @@ label {
   cursor: pointer;
 }
 
-#credits > h1 {
+.credits > h1 {
   border: 2px solid black;
   margin: 2rem;
   padding: 1rem;
@@ -233,28 +232,28 @@ footer {
 }
 
 @media (max-width: 1070px) {
-  #searchBar,
-  #seriesSearchBar {
+  .searchBar,
+  .seriesSearchBar {
     flex-direction: column;
   }
-  #backBtn,
-  #episodeFilter,
-  #searchInput,
-  #selected {
+  .backBtn,
+  .episodeFilter,
+  .searchInput,
+  .selected {
     margin: 1rem;
   }
-  #backBtn {
+  .backBtn {
     max-width: 150px;
     align-self: center;
   }
-  #seriesSearchInput,
-  #selectedSeries,
-  #searchInput,
-  #episodeFilter,
-  #seriesFilter {
+  .seriesSearchInput,
+  .selectedSeries,
+  .searchInput,
+  .episodeFilter,
+  .seriesFilter {
     margin-left: 0;
   }
-  #seriesFilter {
+  .seriesFilter {
     margin-bottom: 0.8rem;
   }
 }
