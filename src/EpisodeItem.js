@@ -4,7 +4,7 @@ const EpisodeItem = ({id, name, season, number, image, summary, color}) => {
 
 	const episodeCode = `S${String(season).padStart(2, '0')}E${String(number).padStart(2, '0')}`;
 	const storedComments = sessionStorage.getItem(`comments${id}${name}`) === null ? [] : JSON.parse(sessionStorage.getItem(`comments${id}${name}`));
-	const [editedSummary, setEditedSummary] = useState(summary);
+	const [editedSummary, setEditedSummary] = useState('');
 	const [editState, setEditState] = useState('');
 	const [isCommentActive, setIsCommentActive] = useState(false);
 	const [comments, setComments] = useState(storedComments);
@@ -13,6 +13,8 @@ const EpisodeItem = ({id, name, season, number, image, summary, color}) => {
 		if (summary && summary.length > 200) {
 			setEditedSummary(summary.slice(0,summary.indexOf(' ', 200)));
 			setEditState('cut');
+		} else if (summary) {
+			setEditedSummary(summary);
 		} else {
 			setEditedSummary('Summary not available');
 		}
