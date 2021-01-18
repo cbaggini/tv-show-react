@@ -57,6 +57,7 @@ const EpisodeView = () => {
 				return (el.summary.toLowerCase().includes(e.target.value.toLowerCase()) || el.name.toLowerCase().includes(e.target.value.toLowerCase()));
 			});
 			setFilteredEpisodes(newEpisodeList);
+			
 		} else {
 			setFilteredEpisodes(episodes);
 		}

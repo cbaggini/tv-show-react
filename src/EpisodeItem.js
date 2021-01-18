@@ -13,6 +13,8 @@ const EpisodeItem = ({id, name, season, number, image, summary, color}) => {
 		if (summary && summary.length > 200) {
 			setEditedSummary(summary.slice(0,summary.indexOf(' ', 200)));
 			setEditState('cut');
+		} else {
+			setEditedSummary('Summary not available');
 		}
 	}, [summary])
 
