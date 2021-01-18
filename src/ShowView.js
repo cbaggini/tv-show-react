@@ -11,12 +11,20 @@ const ShowView = () => {
 	const [sorting, setSorting] = useState('name');
 	const [itemsNumber, setItemsNumber] = useState(10);
 	
+	
 	const history = useHistory();
 
+	const getColor = (id) => { 
+		const newColor =  "hsl(" + Math.round(360 * Math.random()) + ',' +
+					Math.round(25 + 70 * Math.random()) + '%,' + 
+					Math.round(85 + 10 * Math.random()) + '%)';
+		sessionStorage.setItem(`divColor${id}`, JSON.stringify(newColor));
+		return newColor;
+	}
 
 	const selectSeries = (e) => {
 		const selected = data.find(el => el.id === parseInt(e.target.value));
-		const selectedColor = JSON.parse(sessionStorage.getItem(`divColor${selected.id}`));
+		const selectedColor = sessionStorage.getItem(`divColor${selected.id}`) !== null ? JSON.parse(sessionStorage.getItem(`divColor${selected.id}`)) : getColor();
 		history.push(`/${selected.id}/episodes/${selectedColor.slice(selectedColor.indexOf('(')+1).replace(')','').replace(/%/g, '').replace(/,/g,'-')}`);
 	}
 
@@ -57,6 +65,7 @@ const ShowView = () => {
 			<input className="seriesSearchInput" type="text" placeholder="Your search term here" onChange={filterSeries}/>
 			<p className="selectedSeries">found {filteredSeries.length} shows</p>
 			<select name="series" className="seriesFilter" onChange={selectSeries}>
+				<option value="">See all series</option>
 				{selectedSeries.map(el => <option key={`series${el.name}${el.id}`} value={el.id}>{el.name}</option>)}
 			</select>
 			<label htmlFor="alphabetic">
@@ -66,10 +75,10 @@ const ShowView = () => {
 			<input type="radio" className="rating" name="sort" value="rating" checked={sorting === 'rating'} onChange={toggleFilter}/>
 			Sort by rating</label> 
 		</div>
-		<div className="series">{filteredSeries.slice(0, itemsNumber).map(el => <ShowItem key={`series${el.id}`} {...el}/>)}</div>
+		<div className="series">{filteredSeries.slice(0, itemsNumber).map(el => <ShowItem key={`series${el.id}`} {...el} color={sessionStorage.getItem(`divColor${el.id}`) !== null ? JSON.parse(sessionStorage.getItem(`divColor${el.id}`)) : getColor(el.id)}/>)}</div>
 		{filteredSeries.length >= itemsNumber && 
 		<div className="loading" onClick={loadMore}>
-            <h2>Load More</h2>
+            <h2>Load more series...</h2>
         </div>}
 		</>
 	);

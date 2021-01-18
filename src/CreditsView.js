@@ -31,12 +31,20 @@ const CreditsView = () => {
 		}
 	}, [id])
 
+	const getColor = (id) => { 
+		const newColor =  "hsl(" + Math.round(360 * Math.random()) + ',' +
+					Math.round(25 + 70 * Math.random()) + '%,' + 
+					Math.round(85 + 10 * Math.random()) + '%)';
+		sessionStorage.setItem(`divColor${id}`, JSON.stringify(newColor));
+		return newColor;
+	}
+
 	return (
 		<div className="credits">
 			<h1>{actor}</h1>
 			{credits && credits.map(el => {
 				const selected = data.find(subEl => subEl.id === parseInt(el));
-				if (selected) {return <ShowItem key={`series${selected.id}`} {...selected}/>} else {return null}
+				if (selected) {return <ShowItem key={`series${selected.id}`} {...selected} color={sessionStorage.getItem(`divColor${selected.id}`) !== null ? JSON.parse(sessionStorage.getItem(`divColor${selected.id}`)) : getColor(selected.id)}/>} else {return null}
 			})}
 		</div>
 	);

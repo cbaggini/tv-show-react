@@ -32,8 +32,13 @@ a:hover {
   margin-left: 2rem;
 }
 
-h1 {
+h1,
+.loading {
   text-align: center;
+}
+
+.loading:hover {
+  cursor: pointer;
 }
 
 input {

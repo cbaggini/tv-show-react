@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { Link } from 'react-router-dom';
 
 
 
-const ShowItem = ({id, name, image, summary, rating, genres, status, runtime}) => {
+const ShowItem = ({id, name, image, summary, rating, genres, status, runtime, color}) => {
 
 	const storedPref = JSON.parse(sessionStorage.getItem(`seriesLiked${id}`));
-	const [color, setColor] = useState('');
 
 	const toggleLike = (e) => {
 		e.preventDefault();
@@ -18,21 +17,6 @@ const ShowItem = ({id, name, image, summary, rating, genres, status, runtime}) =
 			sessionStorage.setItem(`seriesLiked${id}`, JSON.stringify("fa fa-heart-o"));
 		}
 	}
-
-	useEffect(() => {
-		const getColor = () => { 
-		return "hsl(" + Math.round(360 * Math.random()) + ',' +
-					Math.round(25 + 70 * Math.random()) + '%,' + 
-					Math.round(85 + 10 * Math.random()) + '%)'
-		}
-		if (sessionStorage.getItem(`divColor${id}`) === null) {
-			setColor(getColor());
-			sessionStorage.setItem(`divColor${id}`, JSON.stringify(color));
-		} else {
-			const storedColor = JSON.parse(sessionStorage.getItem(`divColor${id}`));
-			setColor(storedColor);
-		}
-	}, [color, id])
 
 
 	return (
