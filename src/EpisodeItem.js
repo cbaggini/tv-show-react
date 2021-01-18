@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from "react";
 
-const EpisodeItem = ({name, season, number, image, summary, color}) => {
+const EpisodeItem = ({id, name, season, number, image, summary, color}) => {
 
 	const episodeCode = `S${String(season).padStart(2, '0')}E${String(number).padStart(2, '0')}`;
+	const storedComments = sessionStorage.getItem(`comments${id}${name}`) === null ? [] : JSON.parse(sessionStorage.getItem(`comments${id}${name}`));
 	const [editedSummary, setEditedSummary] = useState(summary);
 	const [editState, setEditState] = useState('');
 	const [isCommentActive, setIsCommentActive] = useState(false);
-	const [comments, setComments] = useState([]);
+	const [comments, setComments] = useState(storedComments);
 
 	useEffect(() => {
 		if (summary && summary.length > 200) {
@@ -32,6 +33,7 @@ const EpisodeItem = ({name, season, number, image, summary, color}) => {
 	const saveComment = (e) => {
 		const newComments = [...comments, e.target.previousElementSibling.value];
 		setComments(newComments);
+		sessionStorage.setItem(`comments${id}${name}`, JSON.stringify(newComments));
 		e.target.previousElementSibling.value = '';
 		setIsCommentActive(false);
 	}

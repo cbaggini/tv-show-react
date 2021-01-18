@@ -12,21 +12,30 @@ const CreditsView = () => {
 	const { id } = useParams();
 
 	useEffect(() => {
-		fetch(`https://api.tvmaze.com/people/${id}?embed=castcredits`)
-		.then(response => response.json())
-		.then(data => {
-			let newCredits = data._embedded.castcredits.map(el => el._links.show.href.slice(el._links.show.href.indexOf('shows/') + 6));
-			newCredits = newCredits.filter((el, index, arr) => index === arr.indexOf(el));
-			setCredits(newCredits)
-			setActor(data.name);
-		});
+		if (sessionStorage.getItem(`credits${id}`) === null) {
+			fetch(`https://api.tvmaze.com/people/${id}?embed=castcredits`)
+			.then(response => response.json())
+			.then(data => {
+				let newCredits = data._embedded.castcredits.map(el => el._links.show.href.slice(el._links.show.href.indexOf('shows/') + 6));
+				newCredits = newCredits.filter((el, index, arr) => index === arr.indexOf(el));
+				setCredits(newCredits);
+				setActor(data.name);
+				sessionStorage.setItem(`credits${id}`, JSON.stringify(newCredits));
+				sessionStorage.setItem(`name${id}`, JSON.stringify(data.name));
+			});
+		} else {
+			const newCredits = JSON.parse(sessionStorage.getItem(`credits${id}`));
+			const newName = JSON.parse(sessionStorage.getItem(`name${id}`));
+			setCredits(newCredits);
+			setActor(newName);
+		}
 	}, [id])
 
 	return (
 		<div className="credits">
 			<h1>{actor}</h1>
 			{credits && credits.map(el => {
-				const selected = data.find(subel => subel.id === parseInt(el));
+				const selected = data.find(subEl => subEl.id === parseInt(el));
 				if (selected) {return <ShowItem key={`series${selected.id}`} {...selected}/>} else {return null}
 			})}
 		</div>

@@ -10,32 +10,44 @@ const EpisodeView = () => {
 	const [filteredEpisodes, setFilteredEpisodes] = useState([]);
 	const [season, setSeason] = useState(1);
 	const [cast, setCast] = useState([]);
-	const [color, setColor] = useState('');
-	const { id } = useParams();
+	const { id, colorCode } = useParams();
 	const series = data.find(el => el.id.toString() === id);
 	const uniqueSeries = episodes.map(el => String(el.season).padStart(2, '0')).filter((value, index, arr) => arr.indexOf(value) === index);
+	const colorArr = colorCode.split('-');
+	const color = "hsl(" + colorArr[0] + ',' +
+					colorArr[1] + '%,' + 
+					colorArr[2] + '%)';
 
 	useEffect(() => {
-		fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
-		.then(response => response.json())
-		.then(data => {setEpisodes(data)
-			setFilteredEpisodes(data);
-		});
-		fetch(`https://api.tvmaze.com/shows/${id}/cast`)
-		.then(response => response.json())
-		.then(data => {
-			const newCast = data.length > 9 ? data.slice(0,10) : data
-			setCast(newCast)
-		});
-		const getColor = () => { 
-		return "hsl(" + 360 * Math.random() + ',' +
-					(25 + 70 * Math.random()) + '%,' + 
-					(85 + 10 * Math.random()) + '%)'
+		if (sessionStorage.getItem(`series${id}`) === null) {
+			fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
+			.then(response => response.json())
+			.then(data => {setEpisodes(data)
+				setFilteredEpisodes(data);
+				sessionStorage.setItem(`series${id}`, JSON.stringify(data));
+			});
+		} else {
+			const newSeries = JSON.parse(sessionStorage.getItem(`series${id}`));
+			setEpisodes(newSeries);
+			setFilteredEpisodes(newSeries);
 		}
-		setColor(getColor());
+		
+		if (sessionStorage.getItem(`cast${id}`) === null) {
+			fetch(`https://api.tvmaze.com/shows/${id}/cast`)
+			.then(response => response.json())
+			.then(data => {
+				const newCast = data.length > 9 ? data.slice(0,10) : data;
+				setCast(newCast);
+				sessionStorage.setItem(`cast${id}`, JSON.stringify(newCast));
+			});
+		} else {
+			const newCast = JSON.parse(sessionStorage.getItem(`cast${id}`));
+			setCast(newCast);
+		}
 	}, [id]);
 
 	const selectSeries = (e) => {
+		setFilteredEpisodes(episodes);
 		setSeason(parseInt(e.target.value));
 	}
 
@@ -51,7 +63,7 @@ const EpisodeView = () => {
 	}
 
 	const selectEpisodes = (e) => {
-		if (e.target.value) {
+		if (e.target.value !== "") {
 			const selected = [...episodes].find(el => el.id === parseInt(e.target.value));
 			setFilteredEpisodes([selected]);
 		} else {

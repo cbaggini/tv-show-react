@@ -13,7 +13,7 @@ function App() {
 				<Route exact path='/'>
 					<ShowView />
 				</Route>
-					<Route path='/:id/episodes' children={<EpisodeView />}>
+					<Route path='/:id/episodes/:colorCode' children={<EpisodeView />}>
 				</Route>
 				<Route path='/:id/credits' children={<CreditsView />}>
 				</Route>
