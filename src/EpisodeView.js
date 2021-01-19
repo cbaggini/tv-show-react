@@ -7,8 +7,7 @@ import data from "./data/shows";
 
 const EpisodeView = () => {
 	const [episodes, setEpisodes] = useState([]);
-	const [filteredEpisodes, setFilteredEpisodes] = useState([]);
-	const [season, setSeason] = useState(1);
+	const [filteredEpisodes, setFilteredEpisodes] = useState({eps: [], search: '', season: 1});
 	const [cast, setCast] = useState([]);
 	const { id, colorCode } = useParams();
 	const series = data.find(el => el.id.toString() === id);
@@ -23,13 +22,13 @@ const EpisodeView = () => {
 			fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
 			.then(response => response.json())
 			.then(data => {setEpisodes(data)
-				setFilteredEpisodes(data);
+				setFilteredEpisodes({...filteredEpisodes, eps: data});
 				sessionStorage.setItem(`series${id}`, JSON.stringify(data));
 			});
 		} else {
 			const newSeries = JSON.parse(sessionStorage.getItem(`series${id}`));
 			setEpisodes(newSeries);
-			setFilteredEpisodes(newSeries);
+			setFilteredEpisodes({...filteredEpisodes, eps: newSeries});
 		}
 		
 		if (sessionStorage.getItem(`cast${id}`) === null) {
@@ -47,28 +46,27 @@ const EpisodeView = () => {
 	}, [id]);
 
 	const selectSeries = (e) => {
-		setFilteredEpisodes(episodes);
-		setSeason(parseInt(e.target.value));
+		setFilteredEpisodes({...filteredEpisodes, eps: episodes.filter(el => el.season === parseInt(e.target.value)), season: parseInt(e.target.value), search: ''});
 	}
 
 	const filterEpisodes = (e) => {
 		if (e.target.value) {
 			const newEpisodeList = [...episodes].filter(function(el) {
-				return (el.summary.toLowerCase().includes(e.target.value.toLowerCase()) || el.name.toLowerCase().includes(e.target.value.toLowerCase()));
+				return ((el.summary ? el.summary.toLowerCase().includes(e.target.value.toLowerCase()) : false)|| (el.name ? el.name.toLowerCase().includes(e.target.value.toLowerCase()) : false));
 			});
-			setFilteredEpisodes(newEpisodeList);
+			setFilteredEpisodes({...filteredEpisodes, eps: newEpisodeList, search: e.target.value});
 			
 		} else {
-			setFilteredEpisodes(episodes);
+			setFilteredEpisodes({...filteredEpisodes, eps: episodes, search: ''});
 		}
 	}
 
 	const selectEpisodes = (e) => {
 		if (e.target.value !== "") {
 			const selected = [...episodes].find(el => el.id === parseInt(e.target.value));
-			setFilteredEpisodes([selected]);
+			setFilteredEpisodes({...filteredEpisodes, eps: [selected]});
 		} else {
-			setFilteredEpisodes(episodes);
+			setFilteredEpisodes({...filteredEpisodes, eps: episodes});
 		}
 	}
 
@@ -81,13 +79,13 @@ const EpisodeView = () => {
 			</Link>
 			<select name="episodes" className="episodeFilter" onChange={selectEpisodes}>
 				<option value="">See all episodes</option>
-				{[...episodes].filter(el => el.season === season).map(el => {
+				{filteredEpisodes.eps.map(el => {
 					const episodeCode = `S${String(el.season).padStart(2, '0')}E${String(el.number).padStart(2, '0')}`;
 					return <option key={episodeCode} value={el.id}>{episodeCode} - {el.name}</option>
 				})}
 			</select>
-			<input className="searchInput" type="text" placeholder="Your search term here" onChange={filterEpisodes}/>
-			<p className="selected">Displaying {filteredEpisodes.length}/{episodes.length} episodes</p>
+			<input className="searchInput" type="text" placeholder="Your search term here" onChange={filterEpisodes} value={filteredEpisodes.search}/>
+			<p className="selected">Displaying {filteredEpisodes.eps.length}/{episodes.length} episodes</p>
 		</div>
 		<h1>{series.name}</h1> 
 		<article className="cast" style={{backgroundColor: `${color}`}}>
@@ -100,7 +98,7 @@ const EpisodeView = () => {
 			{uniqueSeries.map(el => <button type="button" className="paginationBtn" style={{backgroundColor: `${color}`}} onClick={selectSeries} value={parseInt(el)} key={el}>Series {el}</button>)}
 		</div>
 		<div className="episodes">
-			{filteredEpisodes.filter(el => el.season === season).map(el => <EpisodeItem key={`episode${el.id}`} {...el} color={color}/>)}
+			{filteredEpisodes.eps.map(el => <EpisodeItem key={`episode${el.id}`} {...el} color={color}/>)}
 		</div>
 		</>
 	);
