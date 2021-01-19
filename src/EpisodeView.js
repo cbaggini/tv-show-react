@@ -22,13 +22,13 @@ const EpisodeView = () => {
 			fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
 			.then(response => response.json())
 			.then(data => {setEpisodes(data)
-				setFilteredEpisodes({...filteredEpisodes, eps: data});
+				setFilteredEpisodes({eps: data, search: '', season: 1});
 				sessionStorage.setItem(`series${id}`, JSON.stringify(data));
 			});
 		} else {
 			const newSeries = JSON.parse(sessionStorage.getItem(`series${id}`));
 			setEpisodes(newSeries);
-			setFilteredEpisodes({...filteredEpisodes, eps: newSeries});
+			setFilteredEpisodes({eps: newSeries, search: '', season: 1});
 		}
 		
 		if (sessionStorage.getItem(`cast${id}`) === null) {
@@ -85,7 +85,7 @@ const EpisodeView = () => {
 				})}
 			</select>
 			<input className="searchInput" type="text" placeholder="Your search term here" onChange={filterEpisodes} value={filteredEpisodes.search}/>
-			<p className="selected">Displaying {filteredEpisodes.eps.length}/{episodes.length} episodes</p>
+			{filteredEpisodes.search && <p className="selected">Displaying {filteredEpisodes.eps.length}/{episodes.length} episodes</p>}
 		</div>
 		<h1>{series.name}</h1> 
 		<article className="cast" style={{backgroundColor: `${color}`}}>
