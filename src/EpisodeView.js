@@ -91,7 +91,7 @@ const EpisodeView = () => {
 		<article className="cast" style={{backgroundColor: `${color}`}}>
 			<h2>Cast</h2>
 			<div>
-				{cast.map(el => <p className="actors" key={`person${el.person.id}${el.character.id}`}><a href={`/${el.person.id}/credits`}>{el.person.name}</a> as {el.character.name}</p>)}
+				{cast.map(el => <p className="actors" key={`person${el.person.id}${el.character.id}`}><Link to={`/${el.person.id}/credits`}>{el.person.name}</Link> as {el.character.name}</p>)}
 			</div>
 		</article>
 		<div className="paginate">
