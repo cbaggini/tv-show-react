@@ -35,11 +35,13 @@ const EpisodeItem = ({id, name, season, number, image, summary, color}) => {
 	}
 
 	const saveComment = (e) => {
-		const newComments = [...comments, e.target.previousElementSibling.value];
-		setComments(newComments);
-		sessionStorage.setItem(`comments${id}${name}`, JSON.stringify(newComments));
-		e.target.previousElementSibling.value = '';
-		setIsCommentActive(false);
+		if (e.target.previousElementSibling.value !== '') {
+			const newComments = [...comments, e.target.previousElementSibling.value];
+			setComments(newComments);
+			sessionStorage.setItem(`comments${id}${name}`, JSON.stringify(newComments));
+			e.target.previousElementSibling.value = '';
+			setIsCommentActive(false);
+		}
 	}
 
 	return (
