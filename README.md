@@ -60,7 +60,7 @@ npm start
 
 #### Episode view
 
-![alt text](https://github.com/cbaggini/tv-show-react/blob/master/episode.png?raw=true)
+![alt text](https://github.com/cbaggini/tv-show-react/blob/master/episodes.png?raw=true)
 
 #### Cast view
 
