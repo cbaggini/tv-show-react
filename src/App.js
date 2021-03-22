@@ -18,7 +18,7 @@ function App() {
 				<Route path='/:id/credits' children={<CreditsView />}>
 				</Route>
 			</Switch>
-		</Router>
+		</Router> 
 	);
 }
 

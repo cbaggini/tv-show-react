@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import EpisodeItem from "./EpisodeItem";
 
-import data from "./data/shows";
+import data from "./data/shows"; 
 
 const EpisodeView = () => {
 	const [episodes, setEpisodes] = useState([]);

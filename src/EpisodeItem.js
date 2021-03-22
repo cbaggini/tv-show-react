@@ -47,7 +47,7 @@ const EpisodeItem = ({id, name, season, number, image, summary, color}) => {
 	return (
 		<section id={episodeCode} className="episodeSection" style={{backgroundColor: `${color}`}}>
 			<div className="title"><h4>{episodeCode} - {name}</h4></div>
-			<img className="episodeImage" alt={name} src={image ? image.medium.replace('http','https') : "http://via.placeholder.com/250x140/0000FF/808080/"}></img>
+			<img className="episodeImage" alt={name} src={image ? image.medium : "https://via.placeholder.com/250x140/0000FF/808080/"}></img>
 			<article className="episodeArticle" dangerouslySetInnerHTML={{__html: editedSummary}}></article> 
 			{ editState === 'cut' && <p className="read" onClick={toggleRead}>Read more</p>}
 			{ editState === 'uncut' && <p className="read" onClick={toggleRead}>Read less</p>}

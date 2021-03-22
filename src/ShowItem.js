@@ -24,7 +24,7 @@ const ShowItem = ({id, name, image, summary, rating, genres, status, runtime, co
 		<section className="seriesClass" style={{backgroundColor: `${color}`}}>
 			<div className="seriesTitle"><h1>{name}</h1></div>
 			<div className="seriesDescription">
-				<img className="seriesImage" alt={name} src={image ? image.medium.replace('http','https') : "http://via.placeholder.com/210x295/0000FF/808080/"} ></img>
+				<img className="seriesImage" alt={name} src={image ? image.medium.replace('http','https') : "https://via.placeholder.com/210x295/0000FF/808080/"} ></img>
 				<article className="seriesArticle"><p dangerouslySetInnerHTML={{__html: summary}} /><i className={storedPref ? storedPref : "fa fa-heart-o"} onClick={toggleLike} style={{fontSize:"24px"}}></i></article>
 				<aside>
 					<p><strong>Rated:&nbsp;</strong>{rating.average}</p>
