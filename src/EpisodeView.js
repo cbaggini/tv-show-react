@@ -64,9 +64,9 @@ const EpisodeView = () => {
 	const selectEpisodes = (e) => {
 		if (e.target.value !== "") {
 			const selected = [...episodes].find(el => el.id === parseInt(e.target.value));
-			setFilteredEpisodes({...filteredEpisodes, eps: [selected]});
+			setFilteredEpisodes({...filteredEpisodes, eps: [selected], search: ''});
 		} else {
-			setFilteredEpisodes({...filteredEpisodes, eps: episodes});
+			setFilteredEpisodes({...filteredEpisodes, eps: episodes, search: ''});
 		}
 	}
 
