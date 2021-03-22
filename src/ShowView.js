@@ -66,7 +66,7 @@ const ShowView = () => {
 			<p className="selectedSeries">found {filteredSeries.length} shows</p>
 			<select name="series" className="seriesFilter" onChange={selectSeries}>
 				<option value="">See all series</option>
-				{selectedSeries.map(el => <option key={`series${el.name}${el.id}`} value={el.id}>{el.name}</option>)}
+				{filteredSeries.map(el => <option key={`series${el.name}${el.id}`} value={el.id}>{el.name}</option>)}
 			</select>
 			<label htmlFor="alphabetic">
 			<input type="radio" className="alphabetic" name="sort" value="alphabetic" checked={sorting === 'name'} onChange={toggleFilter}/>
