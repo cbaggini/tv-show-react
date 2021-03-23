@@ -20,7 +20,7 @@ const ShowView = () => {
 					Math.round(85 + 10 * Math.random()) + '%)';
 		sessionStorage.setItem(`divColor${id}`, JSON.stringify(newColor));
 		return newColor;
-	}
+	}  
 
 	const selectSeries = (e) => {
 		const selected = data.find(el => el.id === parseInt(e.target.value));
