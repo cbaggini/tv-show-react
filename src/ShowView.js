@@ -56,7 +56,7 @@ const ShowView = () => {
 	}
 
 	const loadMore = () => {
-		setItemsNumber(itemsNumber + 10);
+		setItemsNumber(itemsNumber => itemsNumber + 10);
 	}
 
 	return (
